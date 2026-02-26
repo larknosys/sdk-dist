@@ -1,0 +1,29 @@
+name: Notify receivers from messenger $$$NAME
+
+on:
+  push:
+    paths:
+      - $$$DIR_NAME/**
+  workflow_dispatch:
+
+jobs:
+  $$$NAME-messenger-send:
+    strategy:
+      matrix:
+        repo: $$$RECEIVERS
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Trigger target repository workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: $$$NAME-messenger-signal-changed
+          client-payload: |
+            {
+              "source": "${{ github.repository }}",
+              "ref": "${{ github.ref }}",
+              "commit": "${{ github.sha }}"
+            }

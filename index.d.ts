@@ -1,6 +1,22 @@
 import * as lark from '@larksuiteoapi/node-sdk';
 import { Client } from '@larksuiteoapi/node-sdk';
 
+type QiiRecordPathParam = Record<string, string> & {
+    category?: string;
+    collection?: string;
+    id?: string;
+};
+type QiiPathMap = {
+    dataSourceFullPath: string;
+    recordRelativePath: string;
+    recordFullPath: string;
+};
+type QiiRecordHook = (paths: QiiPathMap, params: QiiRecordPathParam) => void;
+
+declare function registerHook(hookName: string, hookFunc: QiiRecordHook): void;
+declare function getHook(hookName: string): QiiRecordHook | undefined;
+declare function applyHook(hookName: string, args: [QiiPathMap, QiiRecordPathParam]): void;
+
 interface LarkSpace {
     name: string;
     description: string;
@@ -66,9 +82,11 @@ type Messenger = Provider & {
 declare function getMessengerConfigFileName(): string;
 declare function getMessengerConfig(): Messenger;
 declare function getMessengerConfigValue<K extends keyof Messenger>(key: K): Messenger[K];
+declare function getMessengerDataDirName(): string;
 declare function getMessengerDataDirPath(): string;
 
 declare function receivePackage(sourcePath?: string): void;
+declare function syncReceivers(): void;
 
-export { createLarkClient, ensureBackupDirExists, fetchSpaces, getBitables, getDocs, getMessengerConfig, getMessengerConfigFileName, getMessengerConfigValue, getMessengerDataDirPath, getSpaceNodes, getSpaceNodesByType, logErr, receivePackage, resolveBackupPath, resolveDataPath, syncBases, syncDocs, syncSpace, syncSpaces };
+export { applyHook, createLarkClient, ensureBackupDirExists, fetchSpaces, getBitables, getDocs, getHook, getMessengerConfig, getMessengerConfigFileName, getMessengerConfigValue, getMessengerDataDirName, getMessengerDataDirPath, getSpaceNodes, getSpaceNodesByType, logErr, receivePackage, registerHook, resolveBackupPath, resolveDataPath, syncBases, syncDocs, syncReceivers, syncSpace, syncSpaces };
 export type { Messenger };
