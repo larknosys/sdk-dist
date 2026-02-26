@@ -37,4 +37,38 @@ declare function syncSpaces(client: lark.Client, spaces?: LarkSpace[], customNod
 declare function syncDocs(client: lark.Client, docs: WikiNode[]): Promise<void>;
 declare function syncBases(client: lark.Client, apps: WikiNode[]): Promise<void>;
 
-export { createLarkClient, ensureBackupDirExists, fetchSpaces, getBitables, getDocs, getSpaceNodes, getSpaceNodesByType, logErr, resolveBackupPath, resolveDataPath, syncBases, syncDocs, syncSpace, syncSpaces };
+type GitRepoName = string;
+type GitRepoUrl = string;
+type CollectionName = string;
+type CollectionNameWithPrefix = string;
+type DirNameOrPath = string;
+type RecordPath = string;
+interface ProviderBase {
+    name: string;
+    type?: string;
+}
+interface QiiProvider extends ProviderBase {
+    type: 'qii';
+    dataSourceDir?: DirNameOrPath;
+    recordPath?: RecordPath;
+    collection?: (CollectionName | CollectionNameWithPrefix)[];
+}
+type Provider = QiiProvider;
+interface Consumer {
+    name: string;
+    repository: GitRepoName | GitRepoUrl;
+}
+type Messenger = Provider & {
+    sender?: string[];
+    receiver?: Consumer[];
+};
+
+declare function getMessengerConfigFileName(): string;
+declare function getMessengerConfig(): Messenger;
+declare function getMessengerConfigValue<K extends keyof Messenger>(key: K): Messenger[K];
+declare function getMessengerDataDirPath(): string;
+
+declare function receivePackage(sourcePath?: string): void;
+
+export { createLarkClient, ensureBackupDirExists, fetchSpaces, getBitables, getDocs, getMessengerConfig, getMessengerConfigFileName, getMessengerConfigValue, getMessengerDataDirPath, getSpaceNodes, getSpaceNodesByType, logErr, receivePackage, resolveBackupPath, resolveDataPath, syncBases, syncDocs, syncSpace, syncSpaces };
+export type { Messenger };
