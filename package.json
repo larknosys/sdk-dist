@@ -1,0 +1,1 @@
+{"name":"@larknosys/sdk","version":"0.0.0","description":"KnoSys DevKit for Lark","main":"index.js","types":"index.d.ts","private":true,"engines":{"node":">=14.15.3"},"dependencies":{"@larksuiteoapi/node-sdk":"1.36.0","@ntks/toolbox":"0.0.6"},"peerDependencies":{"@knosys/sdk":"0.0.3"}}
