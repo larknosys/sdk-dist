@@ -79,6 +79,10 @@ type Messenger = Provider & {
     receiver?: Consumer[];
 };
 type MessengerHooks = {
+    readOne: (sender: Provider, paths: QiiPathMap & {
+        localDataFullPath: string;
+        localBackupFullPath: string;
+    }, params: QiiRecordPathParam) => void;
     received: (sender: Provider, paths: {
         dataSourceFullPath: string;
         localDataFullPath: string;
