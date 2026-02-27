@@ -86,7 +86,8 @@ declare function getMessengerDataDirName(): string;
 declare function getMessengerDataDirPath(): string;
 
 declare function receivePackage(sourcePath?: string): void;
+declare function syncSenders(): void;
 declare function syncReceivers(): void;
 
-export { applyHook, createLarkClient, ensureBackupDirExists, fetchSpaces, getBitables, getDocs, getHook, getMessengerConfig, getMessengerConfigFileName, getMessengerConfigValue, getMessengerDataDirName, getMessengerDataDirPath, getSpaceNodes, getSpaceNodesByType, logErr, receivePackage, registerHook, resolveBackupPath, resolveDataPath, syncBases, syncDocs, syncReceivers, syncSpace, syncSpaces };
+export { applyHook, createLarkClient, ensureBackupDirExists, fetchSpaces, getBitables, getDocs, getHook, getMessengerConfig, getMessengerConfigFileName, getMessengerConfigValue, getMessengerDataDirName, getMessengerDataDirPath, getSpaceNodes, getSpaceNodesByType, logErr, receivePackage, registerHook, resolveBackupPath, resolveDataPath, syncBases, syncDocs, syncReceivers, syncSenders, syncSpace, syncSpaces };
 export type { Messenger };
