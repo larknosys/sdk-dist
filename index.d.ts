@@ -78,6 +78,13 @@ type Messenger = Provider & {
     sender?: string[];
     receiver?: Consumer[];
 };
+type MessengerHooks = {
+    received: (sender: Provider, paths: {
+        dataSourceFullPath: string;
+        localDataFullPath: string;
+        localBackupFullPath: string;
+    }) => void;
+};
 
 declare function getMessengerConfigFileName(): string;
 declare function getMessengerConfig(): Messenger;
@@ -85,7 +92,7 @@ declare function getMessengerConfigValue<K extends keyof Messenger>(key: K): Mes
 declare function getMessengerDataDirName(): string;
 declare function getMessengerDataDirPath(): string;
 
-declare function receivePackage(sourcePath?: string): void;
+declare function receivePackage(sourcePath?: string, hooks?: Partial<MessengerHooks>): void;
 declare function syncSenders(): void;
 declare function syncReceivers(): void;
 
